@@ -1,2 +1,4 @@
 # first-contact-wt-tf
-Migrated codes of the 'First Contact with TensorFlow' for TensorFlow 2.x and Python 3.x
+
+These codes are based on the codes in 'J. Torres, First Contact With Tensorflow. Barcelona: lulu.com, 2016.' Some modifications have been applied for Python 3.x and TensorFlow 2.x.
+
