@@ -32,7 +32,7 @@ class Model(tf.keras.Model):
         self.assignment = tf.argmin(distances, 0)
 
 model = Model()
-for i in range(1):
+for i in range(100):
     model.update_centroids()
 
 df = pd.DataFrame({"x": model.vectors[:, 0], "y": model.vectors[:, 1], "cluster": model.assignment.numpy()})
