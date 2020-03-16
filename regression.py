@@ -80,7 +80,7 @@ def main(args: argparse.Namespace):
     model = Model()
     optimizer = tf.keras.optimizers.SGD(learning_rate=0.5)
 
-    for i in range(8):
+    for i in range(args.iteration):
         grads = grad(model, x1, y1)
         optimizer.apply_gradients(zip(grads, [model.W, model.b]))
         print(f"스텝 {i:03d}에서 손실: {loss(model, x1, y1):.3f}")

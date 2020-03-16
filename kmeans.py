@@ -62,7 +62,7 @@ def main(args: argparse.Namespace):
     logger.info(args)
 
     model = Model(args.num_points, args.num_clusters)
-    for _ in range(100):
+    for _ in range(args.num_iteration):
         model.update_centroids()
         model.update_labels()
 
@@ -78,5 +78,6 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("-n", "--num_points", type=int, action="store", default=2000)
     parser.add_argument("-k", "--num_clusters", type=int, action="store", default=4)
+    parser.add_argument("-i", "--num_iteration", type=int, action="store", default=100)
     args = parser.parse_args()
     main(args)
