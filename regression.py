@@ -80,7 +80,7 @@ def main(args: argparse.Namespace):
     model = Model()
     optimizer = tf.keras.optimizers.SGD(learning_rate=0.5)
 
-    for i in range(args.iteration):
+    for i in range(args.num_iteration):
         grads = grad(model, x1, y1)
         optimizer.apply_gradients(zip(grads, [model.W, model.b]))
         print(f"스텝 {i:03d}에서 손실: {loss(model, x1, y1):.3f}")
@@ -98,5 +98,6 @@ if __name__ == "__main__":
     """
     parser = argparse.ArgumentParser()
     parser.add_argument("-n", "--num_points", type=int, action="store", default=1000)
+    parser.add_argument("-i", "--num_iteration", type=int, action="store", default=8)
     args = parser.parse_args()
     main(args)
