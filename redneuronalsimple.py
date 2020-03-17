@@ -9,6 +9,7 @@ import argparse
 import tensorflow as tf
 import tensorflow_datasets as tfds
 
+
 class Model(tf.keras.Model):
     """A simple fully connected layer
 
@@ -67,15 +68,17 @@ def correct_prediction(y: tf.Tensor, yp: tf.Tensor) -> tf.Tensor:
     """
     return tf.equal(tf.argmax(y, 1), tf.argmax(yp, 1))
 
-def accuracy(correctness: tf.Tensor) -> float:
+def accuracy(y: tf.Tensor, yp: tf.Tensor) -> float:
     """Compare prediction and ground truth
 
     Args:
-      correctness: 1D Tensor of correctness in Boolean
+      y: prediction
+      yp: ground truth
 
     Returns:
       The reduced tensor of accuracy
     """
+    correctness = correct_prediction(y, yp)
     acc = tf.math.reduce_mean(tf.cast(correctness, "float"))
     return acc
 
@@ -103,7 +106,7 @@ def main(args: argparse.Namespace):
         yp = tf.one_hot(batch['label'], args.num_classes)
         grads = grad(model, x, yp)
         optimizer.apply_gradients(zip(grads, [model.W, model.b]))
-        print(f"스텝 {i:03d}에서 손실: {cross_entropy(model, x, yp):.3f}")
+        print(f"스텝 {i:03d}에서 정확도: {accuracy(model(x), yp):.3f}")
 
 if __name__ == "__main__":
     """This is executed when run from the command line
@@ -113,5 +116,5 @@ if __name__ == "__main__":
     parser.add_argument("-s", "--size_of_input", type=int, action="store", default=28*28)
     parser.add_argument("-c", "--num_classes", type=int, action="store", default=10)
     parser.add_argument("-i", "--num_iterations", type=int, action="store", default=1000)
-    args = parser.parse_arg1()
+    args = parser.parse_args()
     main(args)
